@@ -70,7 +70,7 @@ import java.io.IOException;
            el siguiente token del input
         - %type Token es para que la clase tome en cuenta que vamos a devolver un objeto Token
 
-        todo esto no se modifica por ningun motivo :)
+        todo esto no se modifica por ningun motivo :
 
         *** Despues de "%type Token" pueden definir sus ER o tokens, van a encontrar
         el ejemplo para SEMI (";") y para WHITESPACE

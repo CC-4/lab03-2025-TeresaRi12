@@ -46,7 +46,9 @@ public class Parser {
     // Si si avanza el puntero es decir lo consume.
     private boolean term(int id) {
         if(this.next < this.tokens.size() && this.tokens.get(this.next).equals(id)) {
-            
+            Token tok = this.tokens.get(this.next);
+
+        
             // Codigo para el Shunting Yard Algorithm
             /*
             if (id == Token.NUMBER) {
@@ -134,8 +136,76 @@ public class Parser {
     }
 
     private boolean E() {
+        int save = this.next;
+
+        this.next = save;
+        return T() && G();
+    }
+
+    private boolean G() {
+        int save = this.next;
+
+        this.next = save;
+        if ( term(Token.PLUS) && T() && G()) {return true; }
+        this.next = save;
+        if ( term(Token.MINUS) && T() && G()) {return true; }
+        this.next = save; 
+        return true;
+   
+    }
+    private boolean T() {
+        int save = this.next;
+
+        this.next = save;
+        return F() && H();
+    }
+
+    private boolean H() {
+        int save = this.next;
+
+        this.next = save;
+        if ( term(Token.MULT) && F() && H()) {return true; }
+        this.next = save;
+        if ( term(Token.DIV) && F() && H()) {return true; }
+        this.next = save;
+        if ( term(Token.MOD) && F() && H()) {return true; }
+        this.next = save; 
+        return true;
+
+    }
+
+    private boolean F() {
+        int save = this.next;
+
+        this.next = save;
+        return U() && I();
+    }
+
+
+    private boolean I() {
+        int save = this.next;
+
+        this.next = save;
+        if ( term(Token.EXP) ) {return true; }
+
+        this.next = save; 
+        return true;
+        
+    }
+
+    private boolean U() {
+        int save = this.next;
+
+        this.next = save;
+        if ( term(Token.MINUS) && U()) {return true; }
+        this.next = save;
+        if ( term(Token.LPAREN) && E() && term(Token.RPAREN)) {return true; }
+        this.next = save;
+        if ( term(Token.NUMBER)) {return true; }
+
         return false;
     }
+
 
     /* TODO: sus otras funciones aqui */
 }
